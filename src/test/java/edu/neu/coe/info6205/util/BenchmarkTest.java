@@ -6,6 +6,8 @@ package edu.neu.coe.info6205.util;
 
 import org.junit.Test;
 
+import java.util.function.Supplier;
+
 import static org.junit.Assert.assertEquals;
 
 @SuppressWarnings("ALL")
@@ -19,6 +21,7 @@ public class BenchmarkTest {
     public void testWaitPeriods() throws Exception {
         int nRuns = 2;
         int warmups = 2;
+
         Benchmark<Boolean> bm = new Benchmark_Timer<>(
                 "testWaitPeriods", b -> {
             GoToSleep(100L, -1);
@@ -30,6 +33,7 @@ public class BenchmarkTest {
                 b -> {
                     GoToSleep(50L, 1);
                 });
+
         double x = bm.run(true, nRuns);
         assertEquals(nRuns, post);
         assertEquals(nRuns + warmups, run);

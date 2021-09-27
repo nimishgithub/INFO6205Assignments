@@ -4,6 +4,7 @@
 
 package edu.neu.coe.info6205.randomwalk;
 
+import java.io.Console;
 import java.util.Random;
 
 public class RandomWalk {
@@ -20,8 +21,17 @@ public class RandomWalk {
      * @param dy the distance he moves in the y direction
      */
     private void move(int dx, int dy) {
-        // TO BE IMPLEMENTED
+        // IMPLEMENTED
+        /*
+         * Possible Directions:
+         * North (0, 1), South (0, -1), West (-1, 0), East (1, 0)
+         */
+//        System.out.println(String.format("-> Making a random move to: (%d, %d)", dx, dy));
+        this.x += dx;
+        this.y += dy;
+//        System.out.println(String.format("-> Position after making the random move: (%d, %d)", this.x, this.y));
     }
+
 
     /**
      * Perform a random walk of m steps
@@ -29,7 +39,10 @@ public class RandomWalk {
      * @param m the number of steps the drunkard takes
      */
     private void randomWalk(int m) {
-        // TO BE IMPLEMENTED
+        // IMPLEMENTED
+        for (int i = 0; i < m; i++) {
+            randomMove(); // make a random move
+        }
     }
 
     /**
@@ -48,8 +61,39 @@ public class RandomWalk {
      * @return the (Euclidean) distance from the origin to the current position.
      */
     public double distance() {
-        // TO BE IMPLEMENTED
-        return 0;
+        // IMPLEMENTED
+
+        /*Initial and final positions where the drunkard starts...*/
+        int initialPosX = 0, initialPosY = 0;
+        int finalPosX = this.x, finalPosY = this.y;
+
+        /*
+         * Calculating the distance using Euclidean Distance formula
+         * distance (d) = sqrt of ( square (y2 - y1) + square (x2 - x1) )
+         *
+         * Where:
+         * x1 is the initial point on X-axis
+         * x2 is the final point on X-axis
+         * y1 is the initial point on Y-axis
+         * y2 is the initial point on Y-axis
+         */
+
+        /*Calculating the absolute location on X-axis and Y-axis*/
+        int yAxisDifference = Math.abs(finalPosY - initialPosY);
+        int xAxisDifference = Math.abs(finalPosX - initialPosX);
+
+        /*Squaring the difference*/
+        double yAxisDifferenceSquared = Math.pow(yAxisDifference, 2);
+        double xAxisDifferenceSquared = Math.pow(xAxisDifference, 2);
+
+        /*Finally, calculating the distance*/
+        double distance = Math.sqrt(yAxisDifferenceSquared + xAxisDifferenceSquared);
+
+
+        System.out.println(String.format("-> Distance from the initial position i.e the lamp post at (0, 0)," +
+                "where the final position is after n steps is (%d, %d), is %.1f\n---------------------",
+                this.x, this.y, distance));
+        return distance;
     }
 
     /**

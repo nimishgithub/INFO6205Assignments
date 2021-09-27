@@ -54,8 +54,47 @@ public class Timer {
      */
     public <T, U> double repeat(int n, Supplier<T> supplier, Function<T, U> function, UnaryOperator<T> preFunction, Consumer<U> postFunction) {
         logger.trace("repeat: with " + n + " runs");
+
         // TO BE IMPLEMENTED: note that the timer is running when this method is called and should still be running when it returns.
-        return 0;
+
+        T functionInput = supplier.get();
+
+        for(int i = 0; i < n; i++) {
+
+            T preFunctionOutPut = null;
+
+            if (preFunction != null) {
+                pause();
+                preFunctionOutPut = preFunction.apply(functionInput);
+                resume();
+            }
+
+            // if pre-function return a non-null value then
+            // use returned value instead of the value from the supplier.
+
+            T finalFunctionInput = null;
+
+            if (preFunctionOutPut != null) {
+                finalFunctionInput = preFunctionOutPut;
+            } else {
+                finalFunctionInput =  functionInput;
+            }
+
+            U result = function.apply(finalFunctionInput);
+
+            if (postFunction != null) {
+                pause();
+                postFunction.accept(result);
+                resume();
+            }
+            lap();
+        }
+
+        pause();
+        double meanLapTime = meanLapTime();
+        resume();
+
+        return meanLapTime;
     }
 
     /**
@@ -173,8 +212,8 @@ public class Timer {
      * @return the number of ticks for the system clock. Currently defined as nano time.
      */
     private static long getClock() {
-        // TO BE IMPLEMENTED
-        return 0;
+        // IMPLEMENTED
+        return System.nanoTime();
     }
 
     /**
@@ -185,8 +224,8 @@ public class Timer {
      * @return the corresponding number of milliseconds.
      */
     private static double toMillisecs(long ticks) {
-        // TO BE IMPLEMENTED
-        return 0;
+        // IMPLEMENTED
+        return ticks/1000000;
     }
 
     final static LazyLogger logger = new LazyLogger(Timer.class);
