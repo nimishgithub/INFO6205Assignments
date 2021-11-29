@@ -39,7 +39,7 @@ public class RandomWalk {
      * @param m the number of steps the drunkard takes
      */
     private void randomWalk(int m) {
-        // IMPLEMENTED
+        // To be implemented
         for (int i = 0; i < m; i++) {
             randomMove(); // make a random move
         }
@@ -61,38 +61,11 @@ public class RandomWalk {
      * @return the (Euclidean) distance from the origin to the current position.
      */
     public double distance() {
-        // IMPLEMENTED
+        // To be implemented
+        int x1 = 0, x2 = this.x, y1 = 0, y2 = this.y;
 
-        /*Initial and final positions where the drunkard starts...*/
-        int initialPosX = 0, initialPosY = 0;
-        int finalPosX = this.x, finalPosY = this.y;
+        double distance = Math.sqrt(Math.pow(Math.abs(y2 - y1), 2) + Math.pow(Math.abs(x2 - x1), 2));
 
-        /*
-         * Calculating the distance using Euclidean Distance formula
-         * distance (d) = sqrt of ( square (y2 - y1) + square (x2 - x1) )
-         *
-         * Where:
-         * x1 is the initial point on X-axis
-         * x2 is the final point on X-axis
-         * y1 is the initial point on Y-axis
-         * y2 is the initial point on Y-axis
-         */
-
-        /*Calculating the absolute location on X-axis and Y-axis*/
-        int yAxisDifference = Math.abs(finalPosY - initialPosY);
-        int xAxisDifference = Math.abs(finalPosX - initialPosX);
-
-        /*Squaring the difference*/
-        double yAxisDifferenceSquared = Math.pow(yAxisDifference, 2);
-        double xAxisDifferenceSquared = Math.pow(xAxisDifference, 2);
-
-        /*Finally, calculating the distance*/
-        double distance = Math.sqrt(yAxisDifferenceSquared + xAxisDifferenceSquared);
-
-
-        System.out.println(String.format("-> Distance from the initial position i.e the lamp post at (0, 0)," +
-                "where the final position is after n steps is (%d, %d), is %.1f\n---------------------",
-                this.x, this.y, distance));
         return distance;
     }
 
@@ -108,9 +81,21 @@ public class RandomWalk {
         for (int i = 0; i < n; i++) {
             RandomWalk walk = new RandomWalk();
             walk.randomWalk(m);
-            totalDistance = totalDistance + walk.distance();
+            double distance = walk.distance();
+            totalDistance += distance;
+
+//
+//            String meanDistFormatted = String.format("%.2f", distance);
+//            System.out.printf("For Steps = %-10s Distance = %-10s\n", m, meanDistFormatted);
         }
-        return totalDistance / n;
+
+        double meanDistance = totalDistance / n;
+
+//        System.out.println(String.format("Steps(m) = %d,    Mean distance(d) = %.6f", m, meanDistance));
+        String meanDistFormatted = String.format("%.2f", meanDistance);
+        System.out.printf("For Steps = %-10s Distance = %-10s\n", m, meanDistFormatted);
+
+        return meanDistance;
     }
 
     public static void main(String[] args) {

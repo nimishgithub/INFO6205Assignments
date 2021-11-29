@@ -89,11 +89,9 @@ public class RandomWalkTest {
 
     @Test
     public void testRandomWalk3() {
-        // IMPLEMENTED
-
-        int[] intArray = new int[] {2, 4, 25, 80, 134, 200};
-
-        for (int i = 0; i < intArray.length; i++)
-            assertNotSame(0, RandomWalk.randomWalkMulti(intArray[i], 10));
+        // To be implemented
+        for (int steps = 0; steps <= 200000; steps += 1000) {
+            assertNotSame(0, RandomWalk.randomWalkMulti(steps, 10));
+        }
     }
 }
